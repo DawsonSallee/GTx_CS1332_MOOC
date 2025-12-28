@@ -62,7 +62,7 @@ public class Sorting {
      */
     public static <T> void selectionSort(T[] arr, Comparator<T> comparator) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        for(int i = 0; i < arr.length; i++) {
+        for(int i = 0; i < arr.length - 1; i++) {
             int minIndex = i;
             for(int j = i + 1; j < arr.length; j++) {
                 if(comparator.compare(arr[j], arr[minIndex]) < 0 ) {
@@ -93,7 +93,7 @@ public class Sorting {
      */
     public static <T> void insertionSort(T[] arr, Comparator<T> comparator) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        for(int i = 1; i < arr.length - 1; i++) {
+        for(int i = 1; i < arr.length; i++) {
             int j = i;
             while(j > 0 && comparator.compare(arr[j], arr[j - 1]) < 0) {
                 swap(arr, j, j -1);
