@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.LinkedList;
@@ -72,6 +73,51 @@ public class Sorting {
      * @param arr The array to be sorted.
      */
     public static void lsdRadixSort(int[] arr) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+
+        long maxMagnitude = 0;
+        for (int num : arr) {
+            long absNum = Math.abs((long) num);
+            if (absNum > maxMagnitude) {
+                maxMagnitude = absNum;
+            }
+        }
+
+        int maxDigits = 0;
+        if (maxMagnitude == 0) {
+            maxDigits = 1;
+        } else {
+            long temp = maxMagnitude;
+            while (temp > 0) {
+                maxDigits++;
+                temp /= 10;
+            }
+        }
+
+        List<Integer>[] buckets = new ArrayList[19];
+        for (int i = 0; i < 19; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+
+        long powerOfTen = 1;
+
+        for (int k = 0; k < maxDigits; k++) {
+            for (int num : arr) {
+                int digit = (int) ((num / powerOfTen) % 10);
+                buckets[digit + 9].add(num);
+            }
+
+            int arrIndex = 0;
+            for (int i = 0; i < 19; i++) {
+                for (int num : buckets[i]) {
+                    arr[arrIndex++] = num;
+                }
+                buckets[i].clear();
+            }
+
+            powerOfTen *= 10;
+        }
     }
 }
