@@ -40,6 +40,57 @@ public class Sorting {
      */
     public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if(arr.length <= 1) {
+            return;
+        }
+
+        int mid = arr.length / 2;
+
+        T[] left = (T[]) new Object[mid];
+        T[] right = (T[]) new Object[arr.length - mid];
+
+        for(int i = 0; i < mid; i++) {
+            left[i] = arr[i];
+        }
+
+        for(int i = mid; i < arr.length; i++) {
+            right[i - mid] = arr[i];
+        }
+
+        mergeSort(left, comparator);
+        mergeSort(right, comparator);
+
+        merge(arr, left, right, comparator);
+    }
+
+    private static <T> void merge(T[] arr, T[] left, T[] right, Comparator<T> comparator) {
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while(i < left.length && j < right.length) {
+            if(comparator.compare(left[i], right[j]) <= 0) {
+                arr[k] = left[i]; 
+                i++;
+            } else {
+                arr[k] = right[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < left.length) {
+            arr[k] = left[i];
+            i++;
+            k++;
+        }
+
+        // Copy remaining elements from right (if any)
+        while (j < right.length) {
+            arr[k] = right[j];
+            j++;
+            k++;
+        }
     }
 
     /**
